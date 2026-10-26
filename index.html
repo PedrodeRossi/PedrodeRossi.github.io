@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pedro de Rossi — Desenvolvedor</title>
   <meta name="description" content="Portfólio de Pedro de Rossi, desenvolvedor de software." />
+  <meta name="theme-color" content="#050a18" />
   <meta property="og:title" content="Pedro de Rossi — Desenvolvedor" />
   <meta property="og:description" content="Projetos, experiência e contato." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/img/pedro.jpg" />
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <script>
     // Aplica tema salvo antes da renderização para evitar "flash"
@@ -21,13 +23,28 @@
     } catch (e) {}
   </script>
 </head>
-<body>
+<body class="is-loading">
+  <!-- Tela de carregamento -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <span class="preloader-logo glitch" data-text="<PR />">&lt;PR /&gt;</span>
+      <div class="preloader-bar"><span></span></div>
+      <code class="preloader-log" id="preloader-log">booting portfolio...</code>
+    </div>
+  </div>
+
+  <!-- Efeitos de fundo -->
+  <canvas class="bg-canvas" id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Pular para o conteúdo</a>
 
-  <header class="site-header">
+  <header class="site-header" id="site-header">
     <nav class="nav container" aria-label="Principal">
       <a href="#top" class="logo" aria-label="Pedro de Rossi">
-        <span class="logo-mark">&lt;PR /&gt;</span>
+        <span class="logo-bracket">&lt;</span>PR<span class="logo-bracket"> /&gt;</span>
       </a>
 
       <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" data-i18n-aria="nav.menu">
@@ -35,10 +52,10 @@
       </button>
 
       <ul class="nav-menu" id="nav-menu">
-        <li><a href="#sobre" data-i18n="nav.about">Sobre</a></li>
-        <li><a href="#projetos" data-i18n="nav.projects">Projetos</a></li>
-        <li><a href="#experiencia" data-i18n="nav.experience">Experiência</a></li>
-        <li><a href="#contato" data-i18n="nav.contact">Contato</a></li>
+        <li><a href="#sobre"><span class="mono">01.</span> <span data-i18n="nav.about">Sobre</span></a></li>
+        <li><a href="#projetos"><span class="mono">02.</span> <span data-i18n="nav.projects">Projetos</span></a></li>
+        <li><a href="#experiencia"><span class="mono">03.</span> <span data-i18n="nav.experience">Experiência</span></a></li>
+        <li><a href="#contato"><span class="mono">04.</span> <span data-i18n="nav.contact">Contato</span></a></li>
       </ul>
 
       <div class="nav-actions">
@@ -53,88 +70,153 @@
 
   <main id="main">
     <!-- HERO -->
-    <section class="hero container" id="top">
-      <p class="eyebrow mono" data-i18n="hero.greeting">Olá, eu sou</p>
-      <h1 class="hero-title">Pedro de Rossi</h1>
-      <p class="hero-role" data-i18n="hero.role">Desenvolvedor de Software</p>
-      <p class="hero-lead" data-i18n="hero.lead">
-        Construo aplicações web rápidas, acessíveis e bem pensadas — do back-end à interface.
-      </p>
-      <div class="hero-cta">
-        <a href="#projetos" class="btn btn-primary" data-i18n="hero.ctaProjects">Ver projetos</a>
-        <a href="#contato" class="btn btn-ghost" data-i18n="hero.ctaContact">Fale comigo</a>
+    <section class="hero" id="top">
+      <div class="hero-grid-floor" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow mono hero-anim" style="--d:0">
+            <span class="status-dot"></span>
+            <span data-i18n="hero.status">Disponível para novos projetos</span>
+          </p>
+          <p class="hero-greeting mono hero-anim" style="--d:1" data-i18n="hero.greeting">Olá, eu sou</p>
+          <h1 class="hero-title hero-anim" style="--d:2">
+            <span class="glitch" data-text="Pedro">Pedro</span>
+            <span class="gradient-text">de Rossi</span>
+          </h1>
+          <p class="hero-role hero-anim" style="--d:3">
+            <span class="mono prompt">&gt;</span>
+            <span id="typed-role"></span><span class="caret" aria-hidden="true"></span>
+          </p>
+          <p class="hero-lead hero-anim" style="--d:4" data-i18n="hero.lead">
+            Construo aplicações web rápidas, acessíveis e bem pensadas — do back-end à interface.
+          </p>
+          <div class="hero-cta hero-anim" style="--d:5">
+            <a href="#projetos" class="btn btn-primary magnetic"><span data-i18n="hero.ctaProjects">Ver projetos</span></a>
+            <a href="https://www.linkedin.com/in/pedro-de-rossi" target="_blank" rel="noopener" class="btn btn-ghost magnetic">
+              <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.2 1.5-2.2 2.9V21H9z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+          <ul class="socials hero-anim" style="--d:6" aria-label="Redes sociais">
+            <li><a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
+            </a></li>
+            <li><a href="https://www.linkedin.com/in/pedro-de-rossi" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.2 1.5-2.2 2.9V21H9z"/></svg>
+            </a></li>
+            <li><a href="#contato" aria-label="E-mail">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="stroke"><path d="M3 5h18v14H3z"/><path d="m3 6 9 7 9-7"/></svg>
+            </a></li>
+          </ul>
+        </div>
+
+        <div class="hero-visual hero-anim" style="--d:3">
+          <div class="avatar" id="avatar">
+            <div class="avatar-ring" aria-hidden="true"></div>
+            <div class="avatar-ring avatar-ring-2" aria-hidden="true"></div>
+            <div class="avatar-photo">
+              <picture>
+                <source srcset="assets/img/pedro.webp" type="image/webp" />
+                <img src="assets/img/pedro.jpg" alt="Foto de Pedro de Rossi" data-i18n-alt="about.photoAlt" width="720" height="720" />
+              </picture>
+              <span class="avatar-scan" aria-hidden="true"></span>
+            </div>
+            <span class="orbit-chip chip-1" aria-hidden="true">&lt;/&gt;</span>
+            <span class="orbit-chip chip-2" aria-hidden="true">{ }</span>
+            <span class="orbit-chip chip-3" aria-hidden="true">npm run dev</span>
+            <span class="orbit-chip chip-4" aria-hidden="true">git push</span>
+          </div>
+        </div>
       </div>
-      <ul class="socials" aria-label="Redes sociais">
-        <li><a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
-        </a></li>
-        <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.2 1.5-2.2 2.9V21H9z"/></svg>
-        </a></li>
-        <li><a href="mailto:contato@pedroderossi.dev" aria-label="E-mail">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m3 6 9 7 9-7" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-        </a></li>
-      </ul>
+
+      <a href="#sobre" class="scroll-hint" aria-hidden="true" tabindex="-1">
+        <span class="mouse"><span></span></span>
+      </a>
     </section>
 
     <!-- SOBRE -->
-    <section class="section container" id="sobre">
-      <h2 class="section-title"><span class="mono">01.</span> <span data-i18n="about.title">Sobre mim</span></h2>
-      <div class="about-grid">
-        <div class="about-text">
-          <p data-i18n="about.p1">
-            Sou desenvolvedor apaixonado por transformar problemas complexos em soluções simples e elegantes.
-            Gosto de trabalhar em todo o ciclo de um produto: do levantamento de requisitos ao deploy.
-          </p>
-          <p data-i18n="about.p2">
-            Atualmente foco em desenvolvimento web moderno, boas práticas de engenharia e experiência do usuário.
-            Fora do código, gosto de aprender coisas novas e compartilhar conhecimento.
-          </p>
-          <h3 class="skills-title" data-i18n="about.skills">Tecnologias com que trabalho</h3>
-          <ul class="skills" id="skills-list"></ul>
+    <section class="section" id="sobre">
+      <div class="container">
+        <h2 class="section-title" data-reveal>
+          <span class="mono section-num">01. //</span>
+          <span data-i18n="about.title">Sobre mim</span>
+        </h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p data-reveal style="--d:1" data-i18n="about.p1"></p>
+            <p data-reveal style="--d:2" data-i18n="about.p2"></p>
+          </div>
+          <ul class="stats" id="stats"></ul>
         </div>
-        <figure class="about-photo">
-          <img src="assets/img/avatar.svg" alt="Foto de Pedro de Rossi" data-i18n-alt="about.photoAlt" width="320" height="320" />
-        </figure>
+        <h3 class="skills-title mono" data-reveal data-i18n="about.skills">Tecnologias com que trabalho</h3>
+      </div>
+      <div class="marquee" data-reveal aria-label="Tecnologias">
+        <ul class="marquee-track" id="skills-track"></ul>
       </div>
     </section>
 
     <!-- PROJETOS -->
-    <section class="section container" id="projetos">
-      <h2 class="section-title"><span class="mono">02.</span> <span data-i18n="projects.title">Projetos</span></h2>
-      <div class="filters" id="project-filters" role="group" data-i18n-aria="projects.filter"></div>
-      <div class="projects-grid" id="projects-grid"></div>
+    <section class="section" id="projetos">
+      <div class="container">
+        <h2 class="section-title" data-reveal>
+          <span class="mono section-num">02. //</span>
+          <span data-i18n="projects.title">Projetos</span>
+        </h2>
+        <div class="filters" id="project-filters" role="group" data-i18n-aria="projects.filter" data-reveal></div>
+        <div class="projects-grid" id="projects-grid"></div>
+      </div>
     </section>
 
     <!-- EXPERIÊNCIA -->
-    <section class="section container" id="experiencia">
-      <h2 class="section-title"><span class="mono">03.</span> <span data-i18n="experience.title">Experiência</span></h2>
-      <ol class="timeline" id="timeline"></ol>
-      <a href="assets/cv/pedro-de-rossi-cv.pdf" class="btn btn-ghost" download data-i18n="experience.cv">Baixar currículo (PDF)</a>
+    <section class="section" id="experiencia">
+      <div class="container">
+        <h2 class="section-title" data-reveal>
+          <span class="mono section-num">03. //</span>
+          <span data-i18n="experience.title">Experiência</span>
+        </h2>
+        <div class="experience-grid">
+          <ol class="timeline" id="timeline"></ol>
+
+          <aside class="linkedin-card" data-reveal style="--d:2">
+            <div class="linkedin-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.2 1.5-2.2 2.9V21H9z"/></svg>
+            </div>
+            <h3 data-i18n="experience.linkedinTitle">Currículo completo no LinkedIn</h3>
+            <p data-i18n="experience.linkedinText">Histórico detalhado, formação, certificações e recomendações.</p>
+            <a href="https://www.linkedin.com/in/pedro-de-rossi" target="_blank" rel="noopener" class="btn btn-primary magnetic">
+              <span data-i18n="experience.linkedinBtn">Ver perfil no LinkedIn</span> ↗
+            </a>
+            <a href="assets/cv/pedro-de-rossi-cv.pdf" class="btn btn-ghost" download data-i18n="experience.cv">Baixar currículo (PDF)</a>
+          </aside>
+        </div>
+      </div>
     </section>
 
     <!-- CONTATO -->
-    <section class="section container contact" id="contato">
-      <h2 class="section-title"><span class="mono">04.</span> <span data-i18n="contact.title">Contato</span></h2>
-      <p class="contact-lead" data-i18n="contact.lead">
-        Tem um projeto, uma vaga ou só quer trocar uma ideia? Minha caixa de entrada está sempre aberta.
-      </p>
-      <form class="contact-form" id="contact-form" novalidate>
-        <div class="field">
-          <label for="name" data-i18n="contact.name">Nome</label>
-          <input id="name" name="name" type="text" autocomplete="name" required />
-        </div>
-        <div class="field">
-          <label for="email" data-i18n="contact.email">E-mail</label>
-          <input id="email" name="email" type="email" autocomplete="email" required />
-        </div>
-        <div class="field field-full">
-          <label for="message" data-i18n="contact.message">Mensagem</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary" data-i18n="contact.send">Enviar mensagem</button>
-        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-      </form>
+    <section class="section contact" id="contato">
+      <div class="container">
+        <h2 class="section-title" data-reveal>
+          <span class="mono section-num">04. //</span>
+          <span data-i18n="contact.title">Contato</span>
+        </h2>
+        <p class="contact-lead" data-reveal data-i18n="contact.lead"></p>
+        <form class="contact-form" id="contact-form" novalidate data-reveal style="--d:1">
+          <div class="field">
+            <input id="name" name="name" type="text" autocomplete="name" placeholder=" " required />
+            <label for="name" data-i18n="contact.name">Nome</label>
+          </div>
+          <div class="field">
+            <input id="email" name="email" type="email" autocomplete="email" placeholder=" " required />
+            <label for="email" data-i18n="contact.email">E-mail</label>
+          </div>
+          <div class="field field-full">
+            <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
+            <label for="message" data-i18n="contact.message">Mensagem</label>
+          </div>
+          <button type="submit" class="btn btn-primary magnetic"><span data-i18n="contact.send">Enviar mensagem</span></button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
     </section>
   </main>
 
@@ -146,7 +228,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; <span id="year"></span> Pedro de Rossi. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+      <p class="mono">&lt;/&gt; <span data-i18n="footer.made">Feito com código e café por</span> Pedro de Rossi · &copy; <span id="year"></span></p>
     </div>
   </footer>
 

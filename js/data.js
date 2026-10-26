@@ -8,6 +8,13 @@ const SKILLS = [
   "SQL", "PostgreSQL", "Docker", "Git", "HTML & CSS",
 ];
 
+// Números de destaque na seção "Sobre" (animam contando ao aparecer na tela)
+const STATS = [
+  { value: 3, suffix: "+", label: { pt: "anos programando", en: "years coding" } },
+  { value: 15, suffix: "+", label: { pt: "projetos entregues", en: "projects shipped" } },
+  { value: 10, suffix: "", label: { pt: "tecnologias", en: "technologies" } },
+];
+
 const PROJECTS = [
   {
     id: "projeto-1",
@@ -74,6 +81,7 @@ const PROJECTS = [
   },
 ];
 
+// TODO: substituir pelos dados reais do LinkedIn (linkedin.com/in/pedro-de-rossi)
 const EXPERIENCE = [
   {
     period: { pt: "2024 — Atual", en: "2024 — Present" },
