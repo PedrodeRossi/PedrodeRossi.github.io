@@ -2,8 +2,6 @@
    Pedro de Rossi — Portfólio: lógica e animações
    ========================================================================== */
 
-const CONTACT_EMAIL = CONTACT.email;
-
 const storage = {
   get(key) { try { return localStorage.getItem(key); } catch { return null; } },
   set(key, value) { try { localStorage.setItem(key, value); } catch { /* ignore */ } },
@@ -58,6 +56,7 @@ function applyTranslations() {
   renderFilters();
   renderProjects();
   renderTimeline();
+  updateContactLinks();
   startTyping();
 }
 
@@ -276,36 +275,18 @@ function renderTimeline() {
 }
 
 /* Contato ---------------------------------------------------------------- */
-// Sem back-end: abre o cliente de e-mail do visitante. Para envio direto,
-// troque por um serviço como Formspree (https://formspree.io).
-document.getElementById("contact-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const form = e.currentTarget;
-  const status = document.getElementById("form-status");
-  let valid = true;
+// Links diretos; o WhatsApp abre com uma mensagem pronta no idioma atual.
+function updateContactLinks() {
+  document.getElementById("whatsapp-card").href = `${CONTACT.whatsapp}?text=${encodeURIComponent(t("contact.waText"))}`;
+  document.getElementById("email-card").href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(t("contact.mailSubject"))}`;
+}
 
-  ["name", "email", "message"].forEach((id) => {
-    const field = form.elements[id];
-    const ok = field.checkValidity() && field.value.trim() !== "";
-    field.removeAttribute("aria-invalid");
-    void field.offsetWidth; // reinicia a animação de "shake"
-    if (!ok) { field.setAttribute("aria-invalid", "true"); valid = false; }
-  });
-
-  if (!valid) {
-    status.textContent = t("contact.error");
-    status.className = "form-status error";
-    return;
-  }
-
-  const { name, email, message } = form.elements;
-  const subject = encodeURIComponent(`Portfólio — ${name.value}`);
-  const body = encodeURIComponent(`${message.value}\n\n— ${name.value} (${email.value})`);
-  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-
-  status.textContent = t("contact.success");
-  status.className = "form-status success";
-  form.reset();
+document.getElementById("copy-email").addEventListener("click", async (e) => {
+  const btn = e.currentTarget;
+  try { await navigator.clipboard.writeText(CONTACT.email); } catch { prompt("E-mail:", CONTACT.email); return; }
+  btn.textContent = t("contact.copied");
+  btn.classList.add("copied");
+  setTimeout(() => { btn.textContent = t("contact.copy"); btn.classList.remove("copied"); }, 1800);
 });
 
 /* Rolagem: barra de progresso, header, linha do tempo -------------------- */
