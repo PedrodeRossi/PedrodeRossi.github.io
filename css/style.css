@@ -603,7 +603,7 @@ body.loaded .hero-anim {
 }
 
 /* Cartões de contato (botões diretos) ------------------------------------ */
-.contact-cards { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); list-style: none; padding: 0; margin: 0; max-width: 820px; }
+.contact-cards { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); list-style: none; padding: 0; margin: 0; max-width: 1080px; }
 .contact-cards li { position: relative; }
 .contact-card {
   position: relative; overflow: hidden;
@@ -627,8 +627,7 @@ body.loaded .hero-anim {
 .contact-card:hover .contact-card-icon { background: linear-gradient(135deg, var(--neon), var(--neon-2)); color: var(--on-neon); transform: rotate(-8deg) scale(1.06); }
 .contact-card-icon svg { width: 22px; height: 22px; fill: currentColor; }
 .contact-card-icon svg.stroke { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
-.contact-card-label { display: block; font-size: 0.72rem; color: var(--neon); text-transform: uppercase; letter-spacing: 0.08em; }
-.contact-card-value { display: block; font-weight: 600; font-size: 1rem; }
+.contact-card-label { display: block; font: 600 1.25rem var(--font-display); color: var(--text); letter-spacing: -0.01em; }
 .contact-card-cta {
   grid-column: 1 / -1;
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -641,15 +640,6 @@ body.loaded .hero-anim {
 .cta-arrow { display: inline-block; transition: transform 0.35s var(--ease); }
 .contact-card:hover .cta-arrow { transform: translate(3px, -3px); }
 
-.copy-btn {
-  position: absolute; top: 22px; right: 18px; z-index: 2;
-  padding: 5px 10px; border-radius: 8px; cursor: pointer;
-  font-size: 0.72rem; color: var(--text-muted);
-  background: var(--surface-solid); border: 1px solid var(--border);
-  transition: color 0.2s, border-color 0.2s;
-}
-.copy-btn:hover, .copy-btn.copied { color: var(--neon); border-color: var(--neon); }
-.has-copy .contact-card-value { padding-right: 70px; }
 
 /* Ícone por tipo na linha do tempo */
 .timeline-type { display: inline-flex; align-items: center; gap: 6px; float: right; font: 500 0.7rem var(--font-mono); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }

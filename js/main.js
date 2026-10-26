@@ -247,8 +247,9 @@ grid.addEventListener("click", (e) => {
       <p>${escapeHtml(loc(p.description))}</p>
       ${highlights.length ? `<h4>${t("projects.highlights")}</h4><ul class="highlights">${highlights.map((h) => `<li>${escapeHtml(h)}</li>`).join("")}</ul>` : ""}
       <div class="project-links">
+        <a class="btn btn-primary" href="${CONTACT.whatsapp}?text=${encodeURIComponent(`${t("projects.waText")} ${loc(p.title)}`)}" target="_blank" rel="noopener">${t("projects.cta")} ↗</a>
         ${p.repo ? `<a class="btn btn-ghost" href="${p.repo}" target="_blank" rel="noopener">${t("projects.code")} ↗</a>` : ""}
-        ${p.demo ? `<a class="btn btn-primary" href="${p.demo}" target="_blank" rel="noopener">${t("projects.demo")} ↗</a>` : ""}
+        ${p.demo ? `<a class="btn btn-ghost" href="${p.demo}" target="_blank" rel="noopener">${t("projects.demo")} ↗</a>` : ""}
       </div>
     </div>`;
   modal.showModal();
@@ -280,14 +281,6 @@ function updateContactLinks() {
   document.getElementById("whatsapp-card").href = `${CONTACT.whatsapp}?text=${encodeURIComponent(t("contact.waText"))}`;
   document.getElementById("email-card").href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(t("contact.mailSubject"))}`;
 }
-
-document.getElementById("copy-email").addEventListener("click", async (e) => {
-  const btn = e.currentTarget;
-  try { await navigator.clipboard.writeText(CONTACT.email); } catch { prompt("E-mail:", CONTACT.email); return; }
-  btn.textContent = t("contact.copied");
-  btn.classList.add("copied");
-  setTimeout(() => { btn.textContent = t("contact.copy"); btn.classList.remove("copied"); }, 1800);
-});
 
 /* Rolagem: barra de progresso, header, linha do tempo -------------------- */
 const header = document.getElementById("site-header");
