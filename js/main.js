@@ -2,7 +2,7 @@
    Pedro de Rossi — Portfólio: lógica e animações
    ========================================================================== */
 
-const CONTACT_EMAIL = "contato@pedroderossi.dev"; // TODO: trocar pelo e-mail real
+const CONTACT_EMAIL = CONTACT.email;
 
 const storage = {
   get(key) { try { return localStorage.getItem(key); } catch { return null; } },
@@ -54,6 +54,7 @@ function applyTranslations() {
   document.getElementById("lang-toggle").textContent = lang === "pt" ? "EN" : "PT";
 
   renderStats();
+  renderSkills();
   renderFilters();
   renderProjects();
   renderTimeline();
@@ -159,9 +160,11 @@ new IntersectionObserver(
 
 /* Skills (faixa infinita) ------------------------------------------------ */
 // A lista é duplicada para o loop do marquee ficar contínuo
-document.getElementById("skills-track").innerHTML = [...SKILLS, ...SKILLS]
-  .map((s, i) => `<li${i >= SKILLS.length ? ' aria-hidden="true"' : ""}>${escapeHtml(s)}</li>`)
-  .join("");
+function renderSkills() {
+  document.getElementById("skills-track").innerHTML = [...SKILLS, ...SKILLS]
+    .map((s, i) => `<li${i >= SKILLS.length ? ' aria-hidden="true"' : ""}>${escapeHtml(loc(s))}</li>`)
+    .join("");
+}
 
 /* Projetos --------------------------------------------------------------- */
 function renderFilters() {
@@ -261,6 +264,7 @@ function renderTimeline() {
     return `
       <li class="timeline-item">
         <div class="timeline-card" data-reveal>
+          <span class="timeline-type">${item.type === "work" ? "💼" : "🎓"} ${t(`experience.type.${item.type}`)}</span>
           <span class="timeline-period">${escapeHtml(loc(item.period))}</span>
           <h3>${escapeHtml(loc(item.role))}</h3>
           <p class="timeline-company">${escapeHtml(item.company)}</p>

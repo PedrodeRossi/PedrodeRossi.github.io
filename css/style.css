@@ -629,3 +629,26 @@ body.loaded .hero-anim {
   .hero-anim, [data-reveal], .project-card { opacity: 1 !important; transform: none !important; filter: none !important; }
   .cursor-glow { display: none; }
 }
+
+/* Cartões de contato ----------------------------------------------------- */
+.contact-cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); list-style: none; padding: 0; margin: 0 0 44px; max-width: 720px; }
+.contact-card {
+  display: flex; align-items: center; gap: 14px; height: 100%;
+  padding: 18px 20px; border-radius: var(--radius); color: var(--text);
+  background: var(--surface); border: 1px solid var(--border); backdrop-filter: blur(8px);
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
+}
+.contact-card:hover { border-color: var(--neon); box-shadow: var(--glow); transform: translateY(-4px); }
+.contact-card-icon {
+  flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+  background: rgba(var(--neon-rgb), 0.1); color: var(--neon); transition: background 0.3s, color 0.3s;
+}
+.contact-card:hover .contact-card-icon { background: linear-gradient(135deg, var(--neon), var(--neon-2)); color: var(--on-neon); }
+.contact-card-icon svg { width: 20px; height: 20px; fill: currentColor; }
+.contact-card-icon svg.stroke { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.contact-card-label { display: block; font-size: 0.72rem; color: var(--neon); text-transform: uppercase; letter-spacing: 0.08em; }
+.contact-card-value { display: block; font-weight: 600; font-size: 0.95rem; overflow-wrap: anywhere; }
+.contact-or { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 20px; }
+
+/* Ícone por tipo na linha do tempo */
+.timeline-type { display: inline-flex; align-items: center; gap: 6px; float: right; font: 500 0.7rem var(--font-mono); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
